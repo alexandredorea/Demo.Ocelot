@@ -1,0 +1,275 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7011"
+  },
+  "Aggregates": [ // Diferentes agregadores podem ser construídos.
+    {
+      "UpstreamPathTemplate": "/api/posts-usuarios", // Combina dois endpoints api/users e api/posts
+      "RouteKeys": [ "user-key", "post-key" ],
+      "Aggregator": "PostsUsuariosAgregados"
+    }
+  ],
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/usuarios",
+      "UpstreamHttpMethod": [], // Array vazio aceita todos os verbos HTTP, é interessante limitar ["GET", "POST", "PUT"]
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "jsonplaceholder.typicode.com", //URL do serviço que será consultado
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/users",
+      "Key": "user-key",
+      "AuthenticationOptions": { // Segurança: Configuração de autenticação (neste caso JWT) - 401 Unauthorized
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": { //Claims de permisões a este endpoint
+        "tipoUsuario": "usuario"
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/postagens",
+      "UpstreamHttpMethod": [],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "jsonplaceholder.typicode.com",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/posts",
+      "Key": "post-key",
+      "RateLimitOptions": { // Limitar as requisições durante o tempo estabelecido - Configurar para prevenir ataques de bots ou requisições de ataque DDoS
+        "ClientWhitelist": [], // O cliente ou clientes neste array não serão afetados pela limitação de taxa de requisições ao gateway
+        "EnableRateLimiting": true,
+        "Limit": 2, // Quantidade limite para fazer requisições aos endpoints - 429 Too Many request
+        "Period": "3s", // Tempo em segundos
+        "PeriodTimespan": 5 // Se houver mais de 2 requisições em 3 segundo, este é o tempo de espera (segundos) para poder fazer novas solicitações aos endpoints
+      },
+      "DelegatingHandlers": [
+        "BlackListHandler" //Classe com configurações de delegates
+      ]
+    }
+  ]
+}
+//rating de requisições: evita DDoS{
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7011"
+//  },
+//  "Aggregates": [
+//    {
+//      "UpstreamPathTemplate": "/api/posts-usuarios",
+//      "RouteKeys": [ "user-key", "post-key" ],
+//      "Aggregator": "PostsUsuariosAgregados"
+//    }
+//  ],
+//  "Routes": [
+//    {
+//      "UpstreamPathTemplate": "/api/usuarios",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/users",
+//      "Key": "user-key",
+//      "AuthenticationOptions": {
+//        "AuthenticationProviderKey": "Bearer"
+//      },
+//      "RouteClaimsRequirement": {
+//        "tipoUsuario": "user"
+//      }
+//    },
+//    {
+//      "UpstreamPathTemplate": "/api/postagens",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/posts",
+//      "Key": "post-key",
+//      "RateLimitOptions": {
+//        "ClientWhitelist": [],
+//        "EnableRateLimiting": true,
+//        "Period": "3s",
+//        "PeriodTimespan": 5,
+//        "Limit": 1
+//      }
+//    }
+//  ]
+//}
+//permissões/claims{
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7011"
+//  },
+//  "Aggregates": [
+//    {
+//      "UpstreamPathTemplate": "/api/posts-usuarios",
+//      "RouteKeys": [ "user-key", "post-key" ],
+//      "Aggregator": "PostsUsuariosAgregados"
+//    }
+//  ],
+//  "Routes": [
+//    {
+//      "UpstreamPathTemplate": "/api/usuarios",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/users",
+//      "Key": "user-key",
+//      "AuthenticationOptions": {
+//        "AuthenticationProviderKey": "Bearer"
+//      },
+//      "RouteClaimsRequirement": {
+//        "tipoUsuario": "user"
+//      }
+//    },
+//    {
+//      "UpstreamPathTemplate": "/api/postagens",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/posts",
+//      "Key": "post-key"
+//    }
+//  ]
+//}
+//autenticação:{
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7011"
+//  },
+//  "Aggregates": [
+//    {
+//      "UpstreamPathTemplate": "/api/posts-usuarios",
+//      "RouteKeys": [ "user-key", "post-key" ],
+//      "Aggregator": "PostsUsuariosAgregados"
+//    }
+//  ],
+//  "Routes": [
+//    {
+//      "UpstreamPathTemplate": "/api/usuarios",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/users",
+//      "Key": "user-key",
+//      "AuthenticationOptions": {
+//        "AuthenticationProviderKey": "Bearer"
+//      }
+//    },
+//    {
+//      "UpstreamPathTemplate": "/api/postagens",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/posts",
+//      "Key": "post-key"
+//    }
+//  ]
+//}
+//agregação:{
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7011"
+//  },
+//  "Aggregates": [
+//    {
+//      "UpstreamPathTemplate": "/api/posts-usuarios",
+//      "RouteKeys": [ "user-key", "post-key" ],
+//      "Aggregator": "PostsUsuariosAgregados"
+//    }
+//  ],
+//  "Routes": [
+//    {
+//      "UpstreamPathTemplate": "/api/usuarios",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/users",
+//      "Key": "user-key"
+//    },
+//    {
+//      "UpstreamPathTemplate": "/api/postagens",
+//      "UpstreamHttpMethod": [],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/posts",
+//      "Key": "post-key"
+//    }
+//  ]
+//}
+//generelizado, mas há problema{
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7011"
+//  },
+//  "Routes": [
+//    {
+//      "UpstreamPathTemplate": "/api/{path}",
+//      "UpstreamHttpMethod": [ "GET" ],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/{path}"
+//    }
+//  ]
+//}
+//basico:{
+//  "GlobalConfiguration": {
+//    "BaseUrl": "https://localhost:7011"
+//  },
+//  "Routes": [
+//    {
+//      "UpstreamPathTemplate": "/api/users",
+//      "UpstreamHttpMethod": [ "GET" ],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/users"
+//    },
+//    {
+//      "UpstreamPathTemplate": "/api/posts",
+//      "UpstreamHttpMethod": [ "GET" ],
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "jsonplaceholder.typicode.com",
+//          "Port": 443
+//        }
+//      ],
+//      "DownstreamPathTemplate": "/posts"
+//    }
+//  ]
+//}

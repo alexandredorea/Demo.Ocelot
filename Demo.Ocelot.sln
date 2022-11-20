@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AD34E5D1-7A33-4B8C-B42D-14AF680D211F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{08D982BA-DD28-442B-8FE0-2AC9872E42A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "serviços", "serviços", "{E6F237E2-EC19-4CB3-8C6C-8DAFCBE61DA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{8390A31A-65A9-4667-BBA9-61E2A1305B10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Ocelot.Gateway", "src\Demo.Ocelot.Gateway\Demo.Ocelot.Gateway.csproj", "{FF042D86-2F78-46BF-9B14-F816DEC1654F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identidade", "identidade", "{CB2126A8-31A3-4326-94AB-D130BFCFAAE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "microserviços", "microserviços", "{2F5DA3F7-7010-4915-95D2-4577D5FF3151}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Ocelot.Seguranca", "src\Demo.Ocelot.Seguranca\Demo.Ocelot.Seguranca.csproj", "{8528A7AE-CCC9-4CB4-B6A5-2CF70808BE55}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF042D86-2F78-46BF-9B14-F816DEC1654F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF042D86-2F78-46BF-9B14-F816DEC1654F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF042D86-2F78-46BF-9B14-F816DEC1654F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF042D86-2F78-46BF-9B14-F816DEC1654F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8528A7AE-CCC9-4CB4-B6A5-2CF70808BE55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8528A7AE-CCC9-4CB4-B6A5-2CF70808BE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8528A7AE-CCC9-4CB4-B6A5-2CF70808BE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8528A7AE-CCC9-4CB4-B6A5-2CF70808BE55}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6F237E2-EC19-4CB3-8C6C-8DAFCBE61DA2} = {08D982BA-DD28-442B-8FE0-2AC9872E42A7}
+		{8390A31A-65A9-4667-BBA9-61E2A1305B10} = {08D982BA-DD28-442B-8FE0-2AC9872E42A7}
+		{FF042D86-2F78-46BF-9B14-F816DEC1654F} = {8390A31A-65A9-4667-BBA9-61E2A1305B10}
+		{CB2126A8-31A3-4326-94AB-D130BFCFAAE6} = {E6F237E2-EC19-4CB3-8C6C-8DAFCBE61DA2}
+		{2F5DA3F7-7010-4915-95D2-4577D5FF3151} = {E6F237E2-EC19-4CB3-8C6C-8DAFCBE61DA2}
+		{8528A7AE-CCC9-4CB4-B6A5-2CF70808BE55} = {CB2126A8-31A3-4326-94AB-D130BFCFAAE6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F65882EF-2138-4F1B-9955-B89EC303EF09}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "12868c3a-4767-41a6-86be-8b12e471acb9",
+		"name": "Demo Ocelot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"usuario\": \"user\",\r\n  \"senha\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8011/autenticacao/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8011",
+							"path": [
+								"autenticacao",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//limpa o token de acesso que é uma variavel local",
+							"pm.environment.unset(\"tokenAcesso\");",
+							"",
+							"//obtem o retorno da autenticação e salva o token na variavel local",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"tokenAcesso\", jsonData.tokenAcesso);"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Serviços",
+			"item": [
+				{
+					"name": "Postagens",
+					"item": [
+						{
+							"name": "Obter postagens dos usuários (cabeçalho inválido)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7011/api/postagens",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7011",
+									"path": [
+										"api",
+										"postagens"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter postagens dos usuários (cabeçalho preenchido)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-MeuCabecalho",
+										"value": "Algo-Para-Validar",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7011/api/postagens",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7011",
+									"path": [
+										"api",
+										"postagens"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuários",
+					"item": [
+						{
+							"name": "Obter usuários (sem autenticar)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7011/api/usuarios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7011",
+									"path": [
+										"api",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter usuários (com autenticação + cabeçalho inválido)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAcesso}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7011/api/usuarios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7011",
+									"path": [
+										"api",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obter usuários (com autenticação + cabeçalho válido)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAcesso}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-MeuCabecalho",
+										"value": "Algo-Para-Validar",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7011/api/usuarios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7011",
+									"path": [
+										"api",
+										"usuarios"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Agregados",
+					"item": [
+						{
+							"name": "Obter usuários + postagens dos usuários",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAcesso}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-MeuCabecalho",
+										"value": "Algo-Para-Validar",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7011/api/posts-usuarios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7011",
+									"path": [
+										"api",
+										"posts-usuarios"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
