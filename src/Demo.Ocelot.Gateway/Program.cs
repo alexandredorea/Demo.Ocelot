@@ -13,9 +13,15 @@ builder.Configuration
     .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
 builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddAuthentication(opcoes =>
+    {
+        opcoes.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opcoes.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(opcoes =>
     {
+        //opcoes.RequireHttpsMetadata = true;
+        //opcoes.SaveToken = true;
         opcoes.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,

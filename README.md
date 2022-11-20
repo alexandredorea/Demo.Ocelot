@@ -19,3 +19,9 @@
 - https://codewithmukesh.com/blog/microservice-architecture-in-aspnet-core/
 - https://www.c-sharpcorner.com/article/microservices-implementation-with-ocelot-gateway-using-net-core-6-api-and-angul/
 - https://www.treinaweb.com.br/blog/criando-um-api-gateway-com-asp-net-core-e-ocelot
+- https://www.youtube.com/watch?v=P2osfctiHAc
+
+[//]: # (https://www.youtube.com/playlist?list=PLNBxBZe3xfYzjwnUgCkht9CNQnwPoRsHp)
+[//]: # (https://www.youtube.com/watch?v=gPInkLCfalE&list=PLzewa6pjbr3JQKhB_U_FiuYwQC70i-TyU)
+[//]: # (https://www.youtube.com/watch?v=zklBV7_7Nao)
+[//]: # (https://www.youtube.com/playlist?list=PLFmBNfkCoVHI-RP9frQtcROKu0v51al7y)
